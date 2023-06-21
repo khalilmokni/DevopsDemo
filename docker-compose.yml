@@ -26,10 +26,10 @@ services:
     ports:
            - "3306:3306"
     environment:
-           - MYSQL_ROOT_PASSWORD=root
-           - MYSQL_DATABASE=employee_management_system
-           - MYSQL_USER=user
-           - MYSQL_PASSWORD=user
+           - MYSQL_ROOT_PASSWORD=
+           - MYSQL_DATABASE=
+           - MYSQL_USER=
+           - MYSQL_PASSWORD=
     volumes:
       - db-data:/var/lib/mysql
     healthcheck:
