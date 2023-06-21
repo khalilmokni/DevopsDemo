@@ -39,7 +39,6 @@ services:
     restart: always
     networks:
       - angular-springboot-app
-      
 networks:
   angular-springboot-app:
     driver: bridge
