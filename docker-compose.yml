@@ -1,0 +1,49 @@
+version: "3"
+services:
+  front:
+    build:
+      context: ./angular-frontend/
+      dockerfile: Dockerfile
+    ports: 
+      - "80:80"
+    networks:
+      - angular-springboot-app
+    depends_on:
+      - back
+  back:
+    build:
+      context: ./springboot-backend/
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - angular-springboot-app
+    depends_on:
+      - mysqldb
+  
+  mysqldb:
+    image: 'mysql/mysql-server:5.7'
+    container_name: mysqldb
+    ports:
+           - "3306:3306"
+    environment:
+           - MYSQL_ROOT_PASSWORD=root
+           - MYSQL_DATABASE=employee_management_system
+           - MYSQL_USER=user
+           - MYSQL_PASSWORD=user
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+           test: ["CMD","mysqladmin","ping","-h","localhost"]
+           timeout: 20s
+           retries: 10
+    restart: always
+    networks:
+      - angular-springboot-app
+      
+networks:
+  angular-springboot-app:
+    driver: bridge
+volumes:
+  db-data:
+    driver: local
